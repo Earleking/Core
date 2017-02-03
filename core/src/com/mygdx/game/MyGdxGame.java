@@ -5,6 +5,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -16,25 +17,41 @@ import com.badlogic.gdx.physics.box2d.World;
 import java.util.ArrayList;
 
 import Creations.Bullets;
+import Creations.Creations;
+import Creations.Enviro;
 
 public class MyGdxGame extends Game {
 	//General Creation
-	World world;
-	OrthographicCamera camera;
-	SpriteBatch batch;
-	BitmapFont font;
-	//Bullet List
-	ArrayList<Bullets> bulletList;
+	private World world;
+	private OrthographicCamera camera;
+	private SpriteBatch batch;
+	private BitmapFont font;
+	//Masks
+	private short PLAYER = 0x0000;
+	private short GROUND = 0x0001;
+	private short BULLET = 0x0002;
+	//List
+	private ArrayList<Bullets> bulletList;
+	private ArrayList<Enviro> groundList;
+	//Player
+	private Creations playOne;
+
 	
 	@Override
 	public void create () {
+		//Initialize Lists
+		new Bullets(1, 1).createBulletTemplate();
 		bulletList = new ArrayList<Bullets>();
+		groundList = new ArrayList<Enviro>();
+		//World Begin
 		world = new World(new Vector2(0, -10), true);
 		camera = new OrthographicCamera(50, 30);
 		batch = new SpriteBatch();
-		new Bullets(1, 1).createBulletTemplate();
 		font = new BitmapFont();
+		//Creation Objects
 		bulletList.add(new Bullets(1, 1));
+
+		playOne = new Creations(5, 5, 3, 3, Color.BLUE, PLAYER, GROUND);
 	}
 
 	@Override

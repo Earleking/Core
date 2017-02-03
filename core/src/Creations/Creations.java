@@ -19,10 +19,12 @@ public class Creations {
 	private Sprite sprite;
 	private float x, y;
 	public Creations(int x, int y, int height, int width, Color color, int catagoryBits, int maskBits) {
+		this.x = x;
+		this.y = y;
 		//Color it
 		Texture texture;
 		Pixmap pmap = new Pixmap(width, height, Pixmap.Format.RGB565);
-		pmap.setColor(Color.BLUE);
+		pmap.setColor(color);
 		pmap.fillRectangle(0, 0, width, height);
 		texture = new Texture(pmap);
 		texture.draw(pmap, 0, 0);
@@ -34,7 +36,7 @@ public class Creations {
 		bodyDef.position.x = x;
 		createFixture(height, width, catagoryBits, maskBits);
 	}
-	private void createFixture(int height, int width, int catagoryBits, int maskBits) {
+	private void createFixture(int height, int width, int categoryBits, int maskBits) {
 		FixtureDef fixtureDef = new FixtureDef();
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(width, height);
@@ -42,13 +44,15 @@ public class Creations {
 		fixtureDef.friction = 1f;
 		fixtureDef.density = 0.5f;
 		fixtureDef.filter.groupIndex = 1;
-		fixtureDef.filter.categoryBits = (short)catagoryBits;
+		fixtureDef.filter.categoryBits = (short)categoryBits;
 		fixtureDef.filter.maskBits = (short)maskBits;
-
+		body.createFixture(fixtureDef);
 	}
 
 	public void draw(SpriteBatch batch) {
 		batch.draw(sprite, x, y);
 	}
+
+
 
 }
