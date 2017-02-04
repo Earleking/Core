@@ -7,8 +7,10 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
 
 /**
  * Created by Arek Fielding on 1/30/2017.
@@ -18,7 +20,9 @@ public class Creations {
 	private Body body;
 	private Sprite sprite;
 	private float x, y;
-	public Creations(int x, int y, int height, int width, Color color, int catagoryBits, int maskBits) {
+	private static FixtureDef fixtureDef;
+	private static Fixture fixture;
+	public Creations(World world, int x, int y, int height, int width, Color color) {
 		this.x = x;
 		this.y = y;
 		//Color it
@@ -33,20 +37,28 @@ public class Creations {
 		//Create Body for physics
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyDef.BodyType.DynamicBody;
-		bodyDef.position.x = x;
-		createFixture(height, width, catagoryBits, maskBits);
+		bodyDef.position.set(x, y);
+		body = world.createBody(bodyDef);
+		body.createFixture(fixtureDef);
+
 	}
-	private void createFixture(int height, int width, int categoryBits, int maskBits) {
-		FixtureDef fixtureDef = new FixtureDef();
+	public Creations() {
+
+	}
+	public void createFixture(int categoryBits, int maskBits) {
 		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(width, height);
-		fixtureDef.restitution = 0.1f;
-		fixtureDef.friction = 1f;
-		fixtureDef.density = 0.5f;
+		shape.setAsBox(3, 3);
+		fixtureDef = new FixtureDef();
+		fixtureDef.shape = shape;
+		fixtureDef.density = .5f;
+		fixtureDef.restitution = 0;
 		fixtureDef.filter.groupIndex = 1;
 		fixtureDef.filter.categoryBits = (short)categoryBits;
 		fixtureDef.filter.maskBits = (short)maskBits;
-		body.createFixture(fixtureDef);
+
+	}
+	public void addFixture() {
+
 	}
 
 	public void draw(SpriteBatch batch) {

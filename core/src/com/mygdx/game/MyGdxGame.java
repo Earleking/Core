@@ -35,14 +35,16 @@ public class MyGdxGame extends Game {
 	private ArrayList<Enviro> groundList;
 	//Player
 	private Creations playOne;
-
+	private Creations playTwo;
 	
 	@Override
 	public void create () {
 		//Initialize Lists
-		new Bullets(1, 1).createBulletTemplate();
 		bulletList = new ArrayList<Bullets>();
 		groundList = new ArrayList<Enviro>();
+		//Create Static Variables
+		new Bullets(1, 1).createBulletTemplate();
+		new Creations().createFixture(PLAYER, GROUND);
 		//World Begin
 		world = new World(new Vector2(0, -10), true);
 		camera = new OrthographicCamera(50, 30);
@@ -50,8 +52,10 @@ public class MyGdxGame extends Game {
 		font = new BitmapFont();
 		//Creation Objects
 		bulletList.add(new Bullets(1, 1));
+		bulletList.add(new Bullets(1, 3));
 
-		playOne = new Creations(5, 5, 3, 3, Color.BLUE, PLAYER, GROUND);
+		playOne = new Creations(world, 5, 5, 3, 3, Color.BLUE);
+		playTwo = new Creations(world, 10, 10, 3, 3, Color.RED);
 	}
 
 	@Override
@@ -67,6 +71,8 @@ public class MyGdxGame extends Game {
 				bulletList.remove(i);
 			}
 		}
+		playOne.draw(batch);
+		playTwo.draw(batch);
 		font.draw(batch, "Hello", 0, 0);
 		batch.end();
 		camera.update();
@@ -98,7 +104,16 @@ public class MyGdxGame extends Game {
 	}
 
 	void handleInput() {
-		if(Gdx.input.isKeyJustPressed(Input.Keys.D)) {
+		if(Gdx.input.isKeyPressed(Input.Keys.D)) {
+
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.A)) {
+
+		}
+		if(Gdx.input.isKeyJustPressed(Input.Keys.W)) {
+
+		}
+		if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
 
 		}
 	}
