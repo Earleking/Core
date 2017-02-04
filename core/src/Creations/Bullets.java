@@ -40,5 +40,9 @@ public class Bullets {
 		return true;
 
 	}
+	public void dispose() {
+		texture.dispose();
+
+	}
 
 }

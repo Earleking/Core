@@ -39,17 +39,18 @@ public class MyGdxGame extends Game {
 	
 	@Override
 	public void create () {
+		//World Begin
+		world = new World(new Vector2(0, -10), true);
+		camera = new OrthographicCamera(200, 130);
+		batch = new SpriteBatch();
+		font = new BitmapFont();
 		//Initialize Lists
 		bulletList = new ArrayList<Bullets>();
 		groundList = new ArrayList<Enviro>();
 		//Create Static Variables
 		new Bullets(1, 1).createBulletTemplate();
 		new Creations().createFixture(PLAYER, GROUND);
-		//World Begin
-		world = new World(new Vector2(0, -10), true);
-		camera = new OrthographicCamera(50, 30);
-		batch = new SpriteBatch();
-		font = new BitmapFont();
+
 		//Creation Objects
 		bulletList.add(new Bullets(1, 1));
 		bulletList.add(new Bullets(1, 3));

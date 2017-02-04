@@ -22,6 +22,7 @@ public class Creations {
 	private float x, y;
 	private static FixtureDef fixtureDef;
 	private static Fixture fixture;
+	private int width, height;
 	public Creations(World world, int x, int y, int height, int width, Color color) {
 		this.x = x;
 		this.y = y;
@@ -29,6 +30,8 @@ public class Creations {
 		Texture texture;
 		Pixmap pmap = new Pixmap(width, height, Pixmap.Format.RGB565);
 		pmap.setColor(color);
+		this.width = width;
+		this.height = height;
 		pmap.fillRectangle(0, 0, width, height);
 		texture = new Texture(pmap);
 		texture.draw(pmap, 0, 0);
@@ -47,7 +50,7 @@ public class Creations {
 	}
 	public void createFixture(int categoryBits, int maskBits) {
 		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(3, 3);
+		shape.setAsBox(width, height);
 		fixtureDef = new FixtureDef();
 		fixtureDef.shape = shape;
 		fixtureDef.density = .5f;
@@ -57,14 +60,15 @@ public class Creations {
 		fixtureDef.filter.maskBits = (short)maskBits;
 
 	}
-	public void addFixture() {
 
-	}
 
 	public void draw(SpriteBatch batch) {
 		batch.draw(sprite, x, y);
 	}
 
+	public void dispose() {
+
+	}
 
 
 }
